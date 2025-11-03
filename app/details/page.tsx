@@ -21,8 +21,14 @@ export default function DetailsPage() {
   const [tripDetails, setTripDetails] = useState<TripDetails>(bookingDetails.tripDetails)
   const [formData, setFormData] = useState<Partial<TravellerInfo>>({})
 
-  if (!selectedPackage) {
+  // Check if running in browser before redirecting
+  if (typeof window !== 'undefined' && !selectedPackage) {
     router.push("/")
+    return null
+  }
+  
+  // Return null during SSR if no package selected
+  if (!selectedPackage) {
     return null
   }
 

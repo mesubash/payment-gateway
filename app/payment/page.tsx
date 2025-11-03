@@ -15,8 +15,14 @@ export default function PaymentPage() {
   const { selectedPackage, userInfo, bookingDetails, paymentInfo, setPaymentInfo } = usePaymentStore()
   const [isLoading, setIsLoading] = useState(false)
 
-  if (!selectedPackage) {
+  // Check if running in browser before redirecting
+  if (typeof window !== 'undefined' && !selectedPackage) {
     router.push("/")
+    return null
+  }
+  
+  // Return null during SSR if no package selected
+  if (!selectedPackage) {
     return null
   }
 
