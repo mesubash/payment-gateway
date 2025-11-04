@@ -102,10 +102,15 @@ export function TripDetailsForm({ initialData, onSubmit, onBack, buttonText = "C
 
     // When number of travellers changes, update age array and show age section
     if (field === "numberOfTravellers") {
-      const count = typeof value === "number" ? value : parseInt(value) || 1
-      const newAges = Array(count).fill(0).map((_, i) => travellerAges[i] || 0)
-      setTravellerAges(newAges)
-      setShowAges(count > 0)
+      const count = typeof value === "number" ? value : parseInt(value) || 0
+      if (count > 0) {
+        const newAges = Array(count).fill(0).map((_, i) => travellerAges[i] || 0)
+        setTravellerAges(newAges)
+        setShowAges(true)
+      } else {
+        setTravellerAges([])
+        setShowAges(false)
+      }
     }
   }
 
@@ -157,20 +162,31 @@ export function TripDetailsForm({ initialData, onSubmit, onBack, buttonText = "C
           </Label>
           <Input
             id="numberOfTravellers"
-            type="number"
-            min="1"
-            max="20"
-            value={formData.numberOfTravellers}
-            onChange={(e) => handleChange("numberOfTravellers", parseInt(e.target.value) || 1)}
-            placeholder="Enter number of travellers"
+            type="text"
+            value={formData.numberOfTravellers || ''}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9]/g, '');
+              if (value === '') {
+                handleChange("numberOfTravellers", 0);
+              } else {
+                const num = parseInt(value);
+                if (num >= 1 && num <= 20) {
+                  handleChange("numberOfTravellers", num);
+                } else if (num > 20) {
+                  handleChange("numberOfTravellers", 20);
+                }
+              }
+            }}
+            placeholder="Enter number (1-20)"
             className="text-lg"
+            maxLength={2}
           />
           {errors.numberOfTravellers && (
             <p className="text-destructive text-sm mt-1 flex items-center gap-1">
               <AlertCircle className="h-3 w-3" /> {errors.numberOfTravellers}
             </p>
           )}
-          <p className="text-xs text-muted-foreground mt-1">Maximum 20 travellers per booking</p>
+          <p className="text-xs text-muted-foreground mt-1">Enter between 1-20 travellers per booking</p>
         </div>
 
         {/* Age Inputs - Show when number of travellers is entered */}
