@@ -115,7 +115,7 @@ export default function SelectPlanPage() {
 
   const handleSelectPlan = (pkg: Package) => {
     setSelectedPackage(pkg)
-    router.push("/details")
+    router.push("/traveller-info")
   }
 
   const handleBack = () => {
