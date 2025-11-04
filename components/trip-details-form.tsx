@@ -81,6 +81,10 @@ export function TripDetailsForm({ initialData, onSubmit, onBack, buttonText = "C
     const allAgesEntered = travellerAges.every(age => age > 0 && age <= 100)
     if (!allAgesEntered) {
       newErrors.numberOfTravellers = "Please enter valid ages for all travellers"
+      // Show age fields if they're not visible
+      if (!showAges && formData.numberOfTravellers > 0) {
+        setShowAges(true)
+      }
     }
 
     setErrors(newErrors)
