@@ -16,6 +16,7 @@ interface TripDetailsFormProps {
   initialData: TripDetails
   onSubmit: (data: TripDetails, ages: number[]) => void
   onBack: () => void
+  buttonText?: string
 }
 
 const NATIONALITIES = [
@@ -42,7 +43,7 @@ const ADVENTURES = [
   "Other Adventure"
 ]
 
-export function TripDetailsForm({ initialData, onSubmit, onBack }: TripDetailsFormProps) {
+export function TripDetailsForm({ initialData, onSubmit, onBack, buttonText = "Continue to Traveller Details" }: TripDetailsFormProps) {
   const [formData, setFormData] = useState<TripDetails>(initialData)
   const [errors, setErrors] = useState<Partial<Record<keyof TripDetails, string>>>({})
   const [startDate, setStartDate] = useState<Date | undefined>(
@@ -383,7 +384,7 @@ export function TripDetailsForm({ initialData, onSubmit, onBack }: TripDetailsFo
           Back to Packages
         </Button>
         <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700">
-          Continue to Traveller Details
+          {buttonText}
         </Button>
       </div>
     </form>

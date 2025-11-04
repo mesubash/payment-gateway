@@ -121,7 +121,7 @@ export function PackageCard({ package: pkg, onSelect, index = 0 }: PackageCardPr
             className={`w-full ${config.button} text-white font-semibold py-6 rounded-xl transition-all duration-300 group`}
             size="lg"
           >
-            <span>Select Plan</span>
+            <span>Get Quote</span>
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
